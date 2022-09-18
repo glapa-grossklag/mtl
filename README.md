@@ -37,3 +37,10 @@ Output looks like this:
 test_addition: ok
 test_subtraction: not ok (5 - 4 == 2)
 ```
+
+# Notes
+
+- Do not declare any variables nor functions beginning with `mtl_`, as the
+  names may conflict with the library's internal names.
+- The library is unable to catch segmentation faults and other related errors,
+  so check your bounds before running tests.
