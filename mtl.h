@@ -22,6 +22,7 @@
 			fprintf(stderr, "\r%s: ok", __func__); \
 		} else { \
 			fprintf(stderr, "\r%s: not ok (%s)", __func__, MTL_STR(CONDITION)); \
+			mtl_all_successful = false; \
 			return; \
 		} \
 	} while (0)
@@ -33,9 +34,11 @@
 			mtl_suite[i](); \
 			fprintf(stderr, "\n"); \
 		} \
-		return EXIT_SUCCESS; \
+		return mtl_all_successful ? EXIT_SUCCESS : EXIT_FAILURE; \
 	}
 
 typedef void (*mtl_function)(void);
+
+static bool mtl_all_successful = true;
 
 #endif
