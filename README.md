@@ -42,7 +42,7 @@ Output looks like this (with `--verbose`):
 ```
 test_addition: ok
 test_subtraction: not ok (9 - 4 == 1)
-test_multiplication: not ok (We haven't figured this one out yet...)
+test_multiplication: not ok ("We haven't figured this one out yet...")
 ```
 
 All options can be listed with `--help`:

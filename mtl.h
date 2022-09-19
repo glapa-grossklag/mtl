@@ -30,7 +30,7 @@
 #define MTL_FAIL(MESSAGE) \
 	do { \
 		mtl_successful = false; \
-		snprintf(mtl_message, MTL_MAX_MESSAGE_SIZE, "%s: not ok (%s)\n", __func__, MESSAGE); \
+		snprintf(mtl_message, MTL_MAX_MESSAGE_SIZE, "%s: not ok (\"%s\")\n", __func__, MESSAGE); \
 		return; \
 	} while (0)
 
