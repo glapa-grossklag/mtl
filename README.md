@@ -9,33 +9,49 @@ Tests look like this:
 ```c
 #include "mtl.h"
 
-// All functions must return `void` and take `void`.
-void test_addition(void) {
-	// The `MTL_ASSERT()` macro will succeed if the argument evaluates to true.
+// Test functions are declared using `MTL_TEST()`.
+MTL_TEST(test_addition) {
+	// The test will pass if the parameter to `MTL_ASSERT()` evaluates to true.
 	MTL_ASSERT(2 + 2 == 4);
 }
 
-void test_subtraction(void) {
-	// The `MTL_ASSERT()` macro will fail if the argument evaluates to false.
-	MTL_ASSERT(5 - 4 == 2);
+MTL_TEST(test_subtraction) {
+	// The test will fail if the parameter to `MTL_ASSERT()` evaluates to false.
+	MTL_ASSERT(9 - 4 == 1);
 }
 
-// A test suite is a NULL-terminated array of `mtl_function`.
-mtl_function suite[] = {
+MTL_TEST(test_multiplication) {
+	// The test will fail with a custom message if `MTL_FAIL()` is called.
+	MTL_FAIL("We haven't figured this one out yet...");
+}
+
+// Test suites are declared using `MTL_SUITE()` -- the array must end in `NULL`.
+MTL_SUITE(suite) {
 	test_addition,
 	test_subtraction,
+	test_multiplication,
 	NULL,
 };
 
-// The `MTL_MAIN()` macro will define a main function that runs the tests.
+// `MTL_MAIN()` implements a main function that runs the given suite.
 MTL_MAIN(suite)
 ```
 
-Output looks like this:
+Output looks like this (with `--verbose`):
 
 ```
 test_addition: ok
-test_subtraction: not ok (5 - 4 == 2)
+test_subtraction: not ok (9 - 4 == 1)
+test_multiplication: not ok (We haven't figured this one out yet...)
+```
+
+All options can be listed with `--help`:
+
+```
+Options:
+    --help (-h): show this message
+    --verbose (-v): more chatter
+    --fail-fast (-f): exit upon first failure
 ```
 
 # Notes
