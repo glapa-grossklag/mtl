@@ -1,6 +1,6 @@
 # Introduction
 
-MTL (Miles's Test Library) is a minimal, single-header test library for C code.
+MTL (Miles's Test Library) is a minimal (roughly 100 non-blank lines), single-header test library for C code.
 
 # Example
 
