@@ -84,15 +84,15 @@ static void mtl_run_suite(mtl_function tests[]) {
 }
 
 static int mtl_main(int argc, char **argv, mtl_function mtl_suite[]) {
-	static char short_options[] = "hvf";
-	static struct option long_options[] = {
+	static const char short_options[] = "hvf";
+	static const struct option long_options[] = {
 		{"help", no_argument, 0, 'h'},
 		{"verbose", no_argument, 0, 'v'},
 		{"fail-fast", no_argument, 0, 'f'},
 		{0, 0, 0, 0},
 	};
 
-	static char help[] = \
+	static const char help[] = \
 		"Options:\n" \
 		"    --help (-h): show this message\n" \
 		"    --verbose (-v): more chatter\n" \
