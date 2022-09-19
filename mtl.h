@@ -62,15 +62,12 @@ static void mtl_run_test(mtl_function test) {
 
 	test();
 
-	if (!mtl_successful) {
-		mtl_number_of_failures += 1;
-	}
-
 	if (mtl_successful) {
 		if (mtl_verbose) {
 			fprintf(stderr, "%s", mtl_message);
 		}
 	} else {
+		mtl_number_of_failures += 1;
 		fprintf(stderr, "%s", mtl_message);
 		if (mtl_fail_fast) {
 			exit(1);
@@ -101,9 +98,7 @@ static int mtl_main(int argc, char **argv, mtl_function mtl_suite[]) {
 		"    --verbose (-v): more chatter\n" \
 		"    --fail-fast (-f): exit upon first failure\n";
 
-
 	int option = 0;
-
 	while ((option = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
 		switch (option) {
 			case 'h':
@@ -124,10 +119,7 @@ static int mtl_main(int argc, char **argv, mtl_function mtl_suite[]) {
 		}
 	}
 
-	// ==========
-
 	mtl_run_suite(mtl_suite);
-
 	return mtl_number_of_failures == 0 ? 0 : 1;
 }
 
