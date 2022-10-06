@@ -50,6 +50,7 @@ typedef void (*mtl_function)(void);
 // Global variables:
 static bool mtl_successful = true;
 static unsigned mtl_number_of_failures = 0;
+static unsigned mtl_number_of_tests = 0;
 static char mtl_message[MTL_MAX_MESSAGE_SIZE] = {0};
 static bool mtl_verbose = false;
 static bool mtl_fail_fast = false;
@@ -69,17 +70,20 @@ static void mtl_run_test(mtl_function test) {
 	} else {
 		mtl_number_of_failures += 1;
 		fprintf(stderr, "%s", mtl_message);
-		if (mtl_fail_fast) {
-			exit(1);
-		}
 	}
 }
 
 static void mtl_run_suite(mtl_function tests[]) {
 	mtl_number_of_failures = 0;
+	mtl_number_of_tests = 0;
 
 	for (unsigned i = 0; tests[i] != NULL; i += 1) {
 		mtl_run_test(tests[i]);
+		mtl_number_of_tests += 1;
+
+		if (mtl_fail_fast && mtl_number_of_failures > 0) {
+			break;
+		}
 	}
 }
 
@@ -120,6 +124,15 @@ static int mtl_main(int argc, char **argv, mtl_function mtl_suite[]) {
 	}
 
 	mtl_run_suite(mtl_suite);
+
+	if (mtl_verbose) {
+		fprintf(stderr, "\n%u of %u (%.1lf%%) ok\n",
+			mtl_number_of_tests - mtl_number_of_failures,
+			mtl_number_of_tests,
+			100.0 * (mtl_number_of_tests - mtl_number_of_failures) / mtl_number_of_tests
+		);
+	}
+
 	return mtl_number_of_failures == 0 ? 0 : 1;
 }
 

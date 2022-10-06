@@ -37,12 +37,21 @@ MTL_SUITE(suite) {
 MTL_MAIN(suite)
 ```
 
-Output looks like this (with `--verbose`):
+Output looks like this:
+
+```
+test_subtraction: not ok (9 - 4 == 1)
+test_multiplication: not ok ("We haven't figured this one out yet...")
+```
+
+Verbose output looks like this:
 
 ```
 test_addition: ok
 test_subtraction: not ok (9 - 4 == 1)
 test_multiplication: not ok ("We haven't figured this one out yet...")
+
+1 of 3 (33.3%) ok
 ```
 
 All options can be listed with `--help`:
