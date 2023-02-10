@@ -40,6 +40,7 @@ MTL_MAIN(suite)
 Output looks like this:
 
 ```
+test_addition: ok
 test_subtraction: not ok (9 - 4 == 1)
 test_multiplication: not ok ("We haven't figured this one out yet...")
 ```

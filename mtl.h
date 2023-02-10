@@ -16,13 +16,17 @@
 #define MTL_STR_(X) #X
 #define MTL_STR(X) MTL_STR_(X)
 
+#define MTL_COLOR_RED "\033[91m"
+#define MTL_COLOR_GREEN "\033[92m"
+#define MTL_COLOR_RESET "\033[0m"
+
 #define MTL_ASSERT(CONDITION) \
 	do { \
 		mtl_successful = (CONDITION); \
 		if (mtl_successful) { \
-			snprintf(mtl_message, MTL_MAX_MESSAGE_SIZE, "%s: ok\n", __func__); \
+			snprintf(mtl_message, MTL_MAX_MESSAGE_SIZE, MTL_COLOR_GREEN "%s" MTL_COLOR_RESET ": ok" "\n", __func__); \
 		} else { \
-			snprintf(mtl_message, MTL_MAX_MESSAGE_SIZE, "%s: not ok (%s)\n", __func__, MTL_STR(CONDITION)); \
+			snprintf(mtl_message, MTL_MAX_MESSAGE_SIZE, MTL_COLOR_RED "%s" MTL_COLOR_RESET ": not ok (%s)\n", __func__, MTL_STR(CONDITION)); \
 			return; \
 		} \
 	} while (0)
@@ -64,9 +68,7 @@ static void mtl_run_test(mtl_function test) {
 	test();
 
 	if (mtl_successful) {
-		if (mtl_verbose) {
-			fprintf(stderr, "%s", mtl_message);
-		}
+		fprintf(stderr, "%s", mtl_message);
 	} else {
 		mtl_number_of_failures += 1;
 		fprintf(stderr, "%s", mtl_message);
