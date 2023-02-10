@@ -38,16 +38,14 @@
 		return; \
 	} while (0)
 
-#define MTL_MAIN(SUITE) \
+#define MTL_MAIN(TESTS...) \
 	int main(int argc, char **argv) { \
-		return mtl_main(argc, argv, SUITE); \
+		mtl_function tests[] = {TESTS, NULL}; \
+		return mtl_main(argc, argv, tests); \
 	}
 
 // Declare a new test:
 #define MTL_TEST(NAME) static void NAME(void)
-
-// Declare a new suite:
-#define MTL_SUITE(NAME) static mtl_function NAME[] =
 
 typedef void (*mtl_function)(void);
 
@@ -75,7 +73,7 @@ static void mtl_run_test(mtl_function test) {
 	}
 }
 
-static void mtl_run_suite(mtl_function tests[]) {
+static void mtl_run_tests(mtl_function tests[]) {
 	mtl_number_of_failures = 0;
 	mtl_number_of_tests = 0;
 
@@ -89,7 +87,7 @@ static void mtl_run_suite(mtl_function tests[]) {
 	}
 }
 
-static int mtl_main(int argc, char **argv, mtl_function mtl_suite[]) {
+static int mtl_main(int argc, char **argv, mtl_function tests[]) {
 	static const char short_options[] = "hvf";
 	static const struct option long_options[] = {
 		{"help", no_argument, 0, 'h'},
@@ -125,7 +123,7 @@ static int mtl_main(int argc, char **argv, mtl_function mtl_suite[]) {
 		}
 	}
 
-	mtl_run_suite(mtl_suite);
+	mtl_run_tests(tests);
 
 	if (mtl_verbose) {
 		fprintf(stderr, "\n%u of %u (%.1lf%%) ok\n",

@@ -10,49 +10,26 @@ Tests look like this:
 #include "mtl.h"
 
 // Test functions are declared using `MTL_TEST()`.
-MTL_TEST(test_addition) {
-	// The test will pass if the parameter to `MTL_ASSERT()` evaluates to true.
+MTL_TEST(test_int) {
 	MTL_ASSERT(2 + 2 == 4);
 }
 
-MTL_TEST(test_subtraction) {
-	// The test will fail if the parameter to `MTL_ASSERT()` evaluates to false.
-	MTL_ASSERT(9 - 4 == 1);
+MTL_TEST(test_float) {
+	MTL_ASSERT(0.1 + 0.2 == 0.3);
 }
 
-MTL_TEST(test_multiplication) {
-	// The test will fail with a custom message if `MTL_FAIL()` is called.
-	MTL_FAIL("We haven't figured this one out yet...");
-}
-
-// Test suites are declared using `MTL_SUITE()` -- the array must end in `NULL`.
-MTL_SUITE(suite) {
-	test_addition,
-	test_subtraction,
-	test_multiplication,
-	NULL,
-};
-
-// `MTL_MAIN()` implements a main function that runs the given suite.
-MTL_MAIN(suite)
+// `MTL_MAIN()` implements a main function that runs the given tests.
+MTL_MAIN(
+	test_int,
+	test_float
+)
 ```
 
 Output looks like this:
 
 ```
-test_addition: ok
-test_subtraction: not ok (9 - 4 == 1)
-test_multiplication: not ok ("We haven't figured this one out yet...")
-```
-
-Verbose output looks like this:
-
-```
-test_addition: ok
-test_subtraction: not ok (9 - 4 == 1)
-test_multiplication: not ok ("We haven't figured this one out yet...")
-
-1 of 3 (33.3%) ok
+test_int: ok
+test_float: not ok (0.1 + 0.2 == 0.3)
 ```
 
 All options can be listed with `--help`:
